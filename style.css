@@ -1,0 +1,398 @@
+/* ============================================================
+   POKER GAME — STYLES
+   Texas Hold'em vs Computer
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --felt:       #1a5c2e;
+  --felt-dark:  #0f3d1e;
+  --felt-light: #226b37;
+  --gold:       #f5c842;
+  --gold-dark:  #c49a1a;
+  --chip-red:   #c0392b;
+  --chip-blue:  #1a5276;
+  --white:      #f8f5ef;
+  --black:      #1a1a1a;
+  --muted:      rgba(255, 255, 255, 0.45);
+  --border:     rgba(255, 255, 255, 0.12);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-mono:    'IBM Plex Mono', 'Courier New', monospace;
+}
+
+body {
+  font-family: var(--font-mono);
+  background: #111a13;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(26, 92, 46, 0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(15, 61, 30, 0.4) 0%, transparent 60%);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1rem;
+  color: var(--white);
+}
+
+/* ---------- Layout ---------- */
+#app {
+  width: 100%;
+  max-width: 720px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+header h1 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 12px rgba(245, 200, 66, 0.3);
+}
+
+header p {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-top: 4px;
+}
+
+/* ---------- Table / Felt ---------- */
+.table {
+  background: var(--felt);
+  border-radius: 60px;
+  border: 6px solid var(--felt-dark);
+  box-shadow:
+    0 0 0 2px rgba(245, 200, 66, 0.15),
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    inset 0 2px 8px rgba(255, 255, 255, 0.04);
+  padding: 2rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.table::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 40px,
+    rgba(0,0,0,0.03) 40px,
+    rgba(0,0,0,0.03) 80px
+  );
+  pointer-events: none;
+}
+
+/* ---------- Sections ---------- */
+.zone {
+  margin-bottom: 1.2rem;
+}
+
+.zone-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.zone-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ---------- Card Hand Row ---------- */
+.hand {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  min-height: 96px;
+  align-items: center;
+}
+
+/* ---------- Playing Cards ---------- */
+.card {
+  width: 62px;
+  height: 90px;
+  border-radius: 8px;
+  background: var(--white);
+  border: 1px solid rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5px 6px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.1;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.3);
+  animation: dealCard 0.3s ease-out both;
+  user-select: none;
+}
+
+@keyframes dealCard {
+  from { transform: translateY(-12px) scale(0.9); opacity: 0; }
+  to   { transform: translateY(0) scale(1);       opacity: 1; }
+}
+
+.card.red { color: #c0392b; }
+.card.black { color: #1a1a1a; }
+
+.card .top    { font-size: 13px; line-height: 1; }
+.card .middle { font-size: 24px; text-align: center; line-height: 1; }
+.card .bot    { font-size: 13px; line-height: 1; transform: rotate(180deg); text-align: right; }
+
+.card.face-down {
+  background: #1e3a8a;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 8px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 8px);
+  border: 1px solid #1e40af;
+}
+
+.card-placeholder {
+  width: 62px;
+  height: 90px;
+  border-radius: 8px;
+  border: 1px dashed rgba(255,255,255,0.15);
+  background: rgba(0,0,0,0.15);
+}
+
+/* ---------- Community Row ---------- */
+.community-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  min-height: 96px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Pot Display ---------- */
+.pot-area {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.pot-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+}
+
+.pot-amount {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--gold);
+  text-shadow: 0 2px 10px rgba(245, 200, 66, 0.4);
+  line-height: 1.2;
+}
+
+/* ---------- Chips / Info Bar ---------- */
+.info-bar {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.chip {
+  background: rgba(0,0,0,0.35);
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  padding: 6px 16px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chip .chip-val {
+  color: var(--gold);
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.chip .chip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--chip-red);
+}
+
+.chip .chip-dot.blue { background: var(--chip-blue); }
+.chip .chip-dot.green { background: #27ae60; }
+
+/* ---------- Message Box ---------- */
+.message-box {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.85);
+  min-height: 48px;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.message-box .highlight {
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.message-box .win   { color: #2ecc71; font-weight: 500; }
+.message-box .lose  { color: #e74c3c; font-weight: 500; }
+.message-box .split { color: #3498db; font-weight: 500; }
+
+/* ---------- Action Buttons ---------- */
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn {
+  padding: 9px 20px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.btn:active:not(:disabled) { transform: scale(0.97); }
+
+.btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-fold {
+  background: rgba(192, 57, 43, 0.2);
+  color: #f1948a;
+  border-color: rgba(192, 57, 43, 0.4);
+}
+.btn-fold:hover:not(:disabled) {
+  background: rgba(192, 57, 43, 0.35);
+  border-color: rgba(192, 57, 43, 0.7);
+}
+
+.btn-check {
+  background: rgba(26, 82, 118, 0.25);
+  color: #85c1e9;
+  border-color: rgba(26, 82, 118, 0.5);
+}
+.btn-check:hover:not(:disabled) {
+  background: rgba(26, 82, 118, 0.4);
+}
+
+.btn-call {
+  background: rgba(39, 174, 96, 0.2);
+  color: #82e0aa;
+  border-color: rgba(39, 174, 96, 0.4);
+}
+.btn-call:hover:not(:disabled) {
+  background: rgba(39, 174, 96, 0.35);
+}
+
+.btn-raise {
+  background: rgba(245, 200, 66, 0.15);
+  color: var(--gold);
+  border-color: rgba(245, 200, 66, 0.4);
+}
+.btn-raise:hover:not(:disabled) {
+  background: rgba(245, 200, 66, 0.25);
+}
+
+.btn-new {
+  background: rgba(245, 200, 66, 0.9);
+  color: #1a1a1a;
+  border-color: var(--gold);
+  margin-left: auto;
+  font-weight: 600;
+}
+.btn-new:hover:not(:disabled) {
+  background: var(--gold);
+  box-shadow: 0 0 16px rgba(245, 200, 66, 0.35);
+}
+
+/* ---------- Raise Input ---------- */
+.raise-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.raise-wrap label {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.raise-input {
+  width: 72px;
+  padding: 8px 10px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.raise-input:focus { border-color: rgba(245, 200, 66, 0.5); }
+
+/* ---------- Stage Badge ---------- */
+.stage-badge {
+  display: inline-block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(245, 200, 66, 0.12);
+  border: 1px solid rgba(245, 200, 66, 0.25);
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+/* ---------- Dividers ---------- */
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 14px 0;
+}

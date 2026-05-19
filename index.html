@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Texas Hold'em — vs Computer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="app">
+
+    <header>
+      <h1>Texas Hold'em</h1>
+      <p>vs the house &nbsp;·&nbsp; $1,000 starting stack</p>
+    </header>
+
+    <!-- ── TABLE FELT ── -->
+    <div class="table">
+
+      <!-- Computer's hand -->
+      <div class="zone">
+        <div class="zone-label">Computer's hand</div>
+        <div class="hand" id="computer-hand"></div>
+      </div>
+
+      <hr />
+
+      <!-- Community cards -->
+      <div class="zone">
+        <div class="zone-label">Community cards</div>
+        <div class="community-row" id="community-cards"></div>
+      </div>
+
+      <!-- Pot -->
+      <div class="pot-area">
+        <div class="pot-label">Pot</div>
+        <div class="pot-amount" id="pot-display">$0</div>
+      </div>
+
+      <hr />
+
+      <!-- Player's hand -->
+      <div class="zone">
+        <div class="zone-label">Your hand</div>
+        <div class="hand" id="player-hand"></div>
+      </div>
+
+      <!-- Info bar -->
+      <div class="info-bar">
+        <div class="chip">
+          <span class="chip-dot"></span>
+          Your chips: <span class="chip-val" id="player-chips">$1,000</span>
+        </div>
+        <div class="chip">
+          <span class="chip-dot blue"></span>
+          Computer: <span class="chip-val" id="computer-chips">$1,000</span>
+        </div>
+        <div class="chip">
+          <span class="chip-dot green"></span>
+          Stage: <span class="chip-val" id="stage-display">—</span>
+        </div>
+      </div>
+
+      <!-- Message -->
+      <div class="message-box" id="message">
+        Press <span class="highlight">New Game</span> to deal your first hand of Texas Hold'em.
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button class="btn btn-fold"  id="btn-fold"  disabled onclick="playerAction('fold')">Fold</button>
+        <button class="btn btn-check" id="btn-check" disabled onclick="playerAction('check')">Check</button>
+        <button class="btn btn-call"  id="btn-call"  disabled onclick="playerAction('call')">Call</button>
+        <div class="raise-wrap">
+          <label for="raise-amount">$</label>
+          <input  class="raise-input" id="raise-amount" type="number" value="50" min="10" step="10" />
+        </div>
+        <button class="btn btn-raise" id="btn-raise" disabled onclick="playerAction('raise')">Raise</button>
+        <button class="btn btn-new"   id="btn-new"          onclick="newGame()">New Game ▶</button>
+      </div>
+
+    </div><!-- /.table -->
+
+  </div><!-- /#app -->
+
+  <script src="script.js"></script>
+
+</body>
+</html>
